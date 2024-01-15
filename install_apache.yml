@@ -1,0 +1,16 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: update repo
+    apt:
+      update_cache: yes
+
+  - name: Add apache and php
+    apt:
+      name: 
+        - apache2
+        - libapache2-mod-php
+      state: latest
