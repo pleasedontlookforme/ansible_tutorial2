@@ -1,0 +1,40 @@
+---
+- hosts: all
+  become: true
+  tasks: 
+  
+  - name: install updates
+    tags: always
+    apt: 
+      upgrade: dist
+      update_cache: yes
+    
+- hosts: only_server
+  become: true
+  tasks:
+
+  - name: Adding Apache and Php
+    tags: apache,php
+    package:
+      name: 
+        - "{{ apache_package }}"
+        - "{{ php_package }}"
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Adding mariadb package  
+    tags: mariadb,db
+    apt:
+      name: mariadb-server
+      state: latest
+
+  - name: copy default html
+    tags: apache,apache2
+    copy:
+      src: default_shit.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644
+
+

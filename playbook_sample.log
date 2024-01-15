@@ -1,0 +1,19 @@
+Using /home/ian/ansible_tutorial2/ansible.cfg as config file
+
+PLAY [only_server] *************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [192.168.8.192]
+
+TASK [update repo] *************************************************************
+changed: [192.168.8.192] => {"cache_update_time": 1705298422, "cache_updated": true, "changed": true}
+
+TASK [Add apache and php] ******************************************************
+ok: [192.168.8.192] => {"cache_update_time": 1705298422, "cache_updated": false, "changed": false}
+
+TASK [Try running commands] ****************************************************
+changed: [192.168.8.192] => {"changed": true, "cmd": ["./sample/element.sh"], "delta": "0:00:00.002965", "end": "2024-01-15 06:00:24.429158", "rc": 0, "start": "2024-01-15 06:00:24.426193", "stderr": "", "stderr_lines": [], "stdout": "Hello World", "stdout_lines": ["Hello World"]}
+
+PLAY RECAP *********************************************************************
+192.168.8.192              : ok=4    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

@@ -1,16 +1,18 @@
 ---
 
-- hosts: all
+- hosts: only_server
   become: true
   tasks:
 
-  - name: update repo
-    apt:
-      update_cache: yes
-
-  - name: Add apache and php
-    apt:
+  - name: Adding Apache and Php
+    package:
       name: 
-        - apache2
-        - libapache2-mod-php
+        - "{{ apache_package }}"
+        - "{{ php_package }}"
       state: latest
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Try running commands
+    command: ./sample/element.sh
+      
