@@ -1,0 +1,30 @@
+- name: Adding Apache and Php
+  tags: apache,php
+  package:
+    name: 
+      - "{{ apache_package }}"
+      - "{{ php_package }}"
+    state: latest
+  when: ansible_distribution == "Ubuntu"      
+
+- name: Adding mariadb package  
+  tags: mariadb,db
+  apt:
+    name: mariadb-server
+    state: latest
+
+- name: change email for admin on a config file
+  tags: apache,httpd
+  lineinfile:
+    path: /var/www/html/index.html
+    regexp: 'subra kana lods'
+    line: <h1> subra kana lods, ayoko na </h1>
+  notify: restart_apache  
+
+- name: start httpd
+  tags: apache,apache2
+  service:
+    name: apache2
+    state: started
+    enabled: yes
+  when: ansible_distribution == "Ubuntu"
