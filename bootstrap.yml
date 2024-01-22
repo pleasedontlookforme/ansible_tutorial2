@@ -1,0 +1,37 @@
+---
+
+- hosts: all
+  become: true
+  tasks: 
+  
+  - name: install updates
+    tags: always
+    apt: 
+      upgrade: dist
+      update_cache: yes
+
+
+- hosts: all
+  become: true
+  tasks:
+
+    - name: creating new user
+      tags: user,always
+      user:
+        name: simtwo
+        groups: root
+   
+    - name: add ssh key for simone
+      tags: always
+      authorized_key:
+        user: simtwo
+        key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG22e+hfyZSSypEnib8tX/NGf3BMxC/J09gxubsh3HBL Ansible"
+
+    - name: add sudoesrs file for simone
+      tags: always
+      copy:
+        src: sudoer_simtwo
+        dest: /etc/sudoers.d/simtwo
+        owner: root
+        group: root
+        mode: 0440

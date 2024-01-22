@@ -6,11 +6,23 @@
   - name: install updates
     tags: always
     apt: 
-      upgrade: dist
       update_cache: yes
-    
+    changed_when: false
+
+- hosts: all
+  become: true
+  gather_facts: no
+  tasks:
+
+    - name: add ssh key for simone
+      tags: always
+      authorized_key:
+        user: simtwo
+        key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG22e+hfyZSSypEnib8tX/NGf3BMxC/J09gxubsh3HBL Ansible"
+
 - hosts: only_server
   become: true
+  gather_facts: no
   tasks:
 
   - name: Adding Apache and Php
@@ -20,8 +32,7 @@
         - "{{ apache_package }}"
         - "{{ php_package }}"
       state: latest
-    when: ansible_distribution == "Ubuntu"
-
+    when: ansible_distribution == "Ubuntu"      
 
   - name: Adding mariadb package  
     tags: mariadb,db
@@ -57,6 +68,7 @@
 
 - hosts: workstations
   become: true
+  gather_facts: no
   tasks:
 
   - name: install unzip
