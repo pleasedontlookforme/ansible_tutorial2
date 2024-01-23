@@ -1,2 +1,4 @@
 apache_package: apache2 
 php_package: libapache2-mod-php
+ssh_users: "simtwo"
+ssh_template_file: sshd_config_ubuntu.j2

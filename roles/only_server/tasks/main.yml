@@ -1,30 +1,37 @@
-- name: Adding Apache and Php
-  tags: apache,php
-  package:
-    name: 
-      - "{{ apache_package }}"
-      - "{{ php_package }}"
-    state: latest
-  when: ansible_distribution == "Ubuntu"      
-
-- name: Adding mariadb package  
-  tags: mariadb,db
+- name: Adding KVM
   apt:
-    name: mariadb-server
+    name: qemu-kvm
+    state: latest
+    update_cache: yes
+
+- name: Adding libvirt-dev
+  apt:
+    name: libvirt-dev
     state: latest
 
-- name: change email for admin on a config file
-  tags: apache,httpd
-  lineinfile:
-    path: /var/www/html/index.html
-    regexp: 'subra kana lods'
-    line: <h1> subra kana lods, ayoko na </h1>
-  notify: restart_apache  
+- name: Adding bridge-utils
+  apt:
+    name: bridge-utils
+    state: latest
 
-- name: start httpd
-  tags: apache,apache2
-  service:
-    name: apache2
-    state: started
-    enabled: yes
-  when: ansible_distribution == "Ubuntu"
+- name: Adding libvirt-daemon-system
+  apt:
+    name: libvirt-daemon-system
+    state: latest
+
+- name: adding virtinst
+  apt:
+    name: virtinst
+    state: latest
+
+- name: adding libosinfo-bin
+  apt:
+    name: libosinfo-bin
+    state: latest
+
+- name: adding virt-top
+  apt:
+    name: virt-top
+    state: latest
+
+      

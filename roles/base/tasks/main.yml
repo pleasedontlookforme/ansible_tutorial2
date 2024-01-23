@@ -3,3 +3,14 @@
   authorized_key:
     user: simtwo
     key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG22e+hfyZSSypEnib8tX/NGf3BMxC/J09gxubsh3HBL Ansible"
+
+
+- name: generate sshd_config
+  tags: ssh
+  template: 
+    src: "{{ ssh_template_file }}"
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart_sshd
